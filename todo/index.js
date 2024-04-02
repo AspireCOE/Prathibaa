@@ -6,15 +6,9 @@ var todoInput = document.getElementById("todo-input")
 var deleteAllButton = document.getElementById("delete-all")
 var allTodos = document.getElementById("all-todos");
 var deleteSButton = document.getElementById("delete-selected")
-
-
-//event listners for add and delete
 addButton.addEventListener("click", add)
 deleteAllButton.addEventListener("click", deleteAll)
 deleteSButton.addEventListener("click", deleteS)
-
-
-//event listeners for filtersk
 document.addEventListener('click', (e) => {
     if (e.target.className.split(' ')[0] == 'complete' || e.target.className.split(' ')[0] == 'ci') {
         completeTodo(e);
@@ -33,34 +27,25 @@ document.addEventListener('click', (e) => {
     }
 
 })
-//event listner for enter key
 todoInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         add();
     }
 });
-
-
-//updates the all the remaining, completed and main list
 function update() {
     comdoList = todoList.filter((ele) => {
         return ele.complete
-
     })
     remList = todoList.filter((ele) => {
         return !ele.complete
     })
     document.getElementById("r-count").innerText = todoList.length.toString();
     document.getElementById("c-count").innerText = comdoList.length.toString();
-
 }
-
-//adds the task in main list
-
 function add() {
     var value = todoInput.value;
     if (value === '') {
-        alert("😮 Task cannot be empty")
+        alert("Task cannot be empty")
         return;
     }
     todoList.push({
@@ -73,10 +58,6 @@ function add() {
     update();
     addinmain(todoList);
 }
-
-
-//renders the main list and views on the main content
-
 function addinmain(todoList) {
     allTodos.innerHTML = ""
     todoList.forEach(element => {
@@ -95,9 +76,6 @@ function addinmain(todoList) {
         allTodos.innerHTML += x
     });
 }
-
-
-//deletes and indiviual task and update all the list
 function deleteTodo(e) {
     var deleted = e.target.parentElement.parentElement.getAttribute('id');
     todoList = todoList.filter((ele) => {
@@ -108,8 +86,6 @@ function deleteTodo(e) {
     addinmain(todoList);
 
 }
-
-//completes indiviaula task and updates all the list
 function completeTodo(e) {
     var completed = e.target.parentElement.parentElement.getAttribute('id');
     todoList.forEach((obj) => {
@@ -128,9 +104,6 @@ function completeTodo(e) {
     update();
     addinmain(todoList);
 }
-
-
-//deletes all the tasks
 function deleteAll(todo) {
 
     todoList = []
@@ -139,22 +112,14 @@ function deleteAll(todo) {
     addinmain(todoList);
 
 }
-
-//deletes only completed task
 function deleteS(todo) {
 
     todoList = todoList.filter((ele) => {
         return !ele.complete;
     })
-
-
     update();
     addinmain(todoList);
-
 }
-
-
-// functions for filters
 function viewCompleted() {
     addinmain(comdoList);
 }
